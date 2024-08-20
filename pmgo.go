@@ -79,7 +79,7 @@ var (
 	status = app.Command("list", "Get pmgo list.")
 
 	version        = app.Command("version", "get version")
-	currentVersion = "0.6.1"
+	currentVersion = "0.6.2"
 
 	info     = app.Command("info", "Describe importance parameters of a process id")
 	infoName = info.Arg("name", "process name").Required().String()
