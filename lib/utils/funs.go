@@ -79,10 +79,10 @@ func GetTableWriter() *tablewriter.Table {
 
 // CheckSourceFolderExit will check source code folder exist
 func CheckSourceFolderExit(sourceFolder string) (bool, error) {
-	gopath := os.Getenv("GOPATH")
-	err := os.Chdir(gopath + "/src/" + sourceFolder)
+	//	gopath := os.Getenv("GOPATH")
+	err := os.Chdir(sourceFolder)
 	if err != nil {
-		log.Errorln(sourceFolder+" doesn't exit under GOPATH", err)
+		log.Errorln(sourceFolder+" doesn't exists", err)
 		return false, err
 	}
 	return true, nil
