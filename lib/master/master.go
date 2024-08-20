@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"sort"
 	"sync"
 
 	"time"
@@ -197,8 +198,16 @@ func (master *Master) RunPreparable(procPreparable preparable.ProcPreparable) er
 // ListProcs will return a list of all procs.
 func (master *Master) ListProcs() []process.ProcContainer {
 	procsList := []process.ProcContainer{}
-	for _, v := range master.Procs {
-		procsList = append(procsList, v)
+
+	// Get the keys and sort them
+	keys := make([]string, 0, len(master.Procs))
+	for k := range master.Procs {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	for _, k := range keys {
+		procsList = append(procsList, master.Procs[k])
 	}
 	return procsList
 }
@@ -211,7 +220,7 @@ func (master *Master) RestartProcess(name string) error {
 		master.Unlock()
 		return err
 	}
-	return errors.New("unknow process.")
+	return errors.New("unknown process")
 
 }
 
@@ -300,7 +309,8 @@ func (master *Master) delete(proc process.ProcContainer) error {
 func (master *Master) stop(proc process.ProcContainer) error {
 	if proc.IsAlive() {
 		waitStop := master.Watcher.StopWatcher(proc.Identifier())
-		err := proc.GracefullyStop()
+		// err := proc.GracefullyStop()
+		err := proc.ForceStop()
 		if err != nil {
 			return err
 		}

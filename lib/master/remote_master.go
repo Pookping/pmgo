@@ -134,7 +134,7 @@ func (remote_master *RemoteMaster) Stop() error {
 	return remote_master.master.Stop()
 }
 
-//GetProcByName will return proc detail info by name
+// GetProcByName will return proc detail info by name
 func (remote_master *RemoteMaster) GetProcByName(procName string, response *map[string]string) error {
 	*response = remote_master.master.ProcInfo(procName)
 	return nil
@@ -185,7 +185,6 @@ func (client *RemoteClient) StartGoBin(sourcePath string, name string, keepAlive
 		Args:       args,
 		BinFile:    binFile,
 	}
-
 	return client.conn.Call("RemoteMaster.StartGoBin", goBin, &started)
 }
 

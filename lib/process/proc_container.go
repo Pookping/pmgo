@@ -98,7 +98,7 @@ func (proc *Proc) ForceStop() error {
 		proc.release()
 		return err
 	}
-	return errors.New("Process does not exist.")
+	return errors.New("process does not exist")
 }
 
 // GracefullyStop will send a SIGTERM signal asking the process to terminate.
@@ -111,14 +111,15 @@ func (proc *Proc) GracefullyStop() error {
 		proc.Status.SetStatus("asked to stop")
 		return err
 	}
-	return errors.New("Process does not exist.")
+	return errors.New("process does not exist")
 }
 
 // Restart will try to gracefully stop the process and then Start it again.
 // Returns an error in case there's any.
 func (proc *Proc) Restart() error {
 	if proc.IsAlive() {
-		err := proc.GracefullyStop()
+		// err := proc.GracefullyStop()
+		err := proc.ForceStop()
 		if err != nil {
 			return err
 		}
