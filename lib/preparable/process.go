@@ -64,7 +64,8 @@ func (preparable *Preparable) PrepareBin() ([]byte, error) {
 	cmdArgs := []string{}
 	if preparable.Language == "go" {
 		cmd = "go"
-		sourceCodePath := os.Getenv("GOPATH") + "/src/" + preparable.SourcePath
+		//sourceCodePath := os.Getenv("GOPATH") + "/src/" + preparable.SourcePath
+		sourceCodePath := preparable.SourcePath
 		cmdArgs = []string{"build", "-o", binPath, sourceCodePath + "/."}
 	}
 	preparable.Cmd = binPath
